@@ -1,0 +1,14 @@
+# Build folder
+build
+
+# Maven artifact
+maven
+
+# Android Studio local
+local.properties
+.gradle
+.idea
+*.iml
+
+# MacOS
+.DS_Store
