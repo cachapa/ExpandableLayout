@@ -239,7 +239,9 @@ public class ExpandableLinearLayout extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (targetHeight != 0) {
+                if (targetHeight == 0) {
+                    view.setVisibility(GONE);
+                } else {
                     lp.height = lp.originalHeight;
                     lp.weight = lp.originalWeight;
                 }
