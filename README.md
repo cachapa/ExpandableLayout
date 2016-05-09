@@ -51,7 +51,7 @@ Then reference the library from your module's build.gradle:
 ``` gradle
 dependencies {
     [...]
-    compile 'com.github.cachapa:expandablelayout:x.y'
+    compile 'com.github.cachapa:expandablelayout:1.1'
 }
 ```
 
