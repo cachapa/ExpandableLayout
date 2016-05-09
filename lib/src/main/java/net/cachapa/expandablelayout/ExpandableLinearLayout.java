@@ -142,6 +142,10 @@ public class ExpandableLinearLayout extends LinearLayout {
         super.onConfigurationChanged(newConfig);
     }
 
+    public boolean isExpanded() {
+        return expanded;
+    }
+
     public void toggle() {
         if (expanded) {
             collapse();
