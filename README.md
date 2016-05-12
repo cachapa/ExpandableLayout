@@ -78,9 +78,9 @@ Add the ExpandableLinearLayout as the root of the layout you want to make expand
 
 </net.cachapa.expandablelayout.ExpandableLinearLayout>
 ```
-Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expandaded, respectively.
+Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively.
 
-To trigger the animation, simply grab a refrence to the ExpandableLinearLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
+To trigger the animation, simply grab a reference to the ExpandableLinearLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
 
 A full demo of the library is included with the project under the `demo` directory.
 
