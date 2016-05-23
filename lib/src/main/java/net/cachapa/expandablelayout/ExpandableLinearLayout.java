@@ -147,15 +147,23 @@ public class ExpandableLinearLayout extends LinearLayout {
     }
 
     public void toggle() {
+        toggle(true);
+    }
+
+    public void toggle(boolean animate) {
         if (expanded) {
-            collapse();
+            collapse(animate);
         } else {
-            expand();
+            expand(animate);
         }
     }
 
-    @SuppressLint("WrongCall")
     public void expand() {
+        expand(true);
+    }
+
+    @SuppressLint("WrongCall")
+    public void expand(boolean animate) {
         if (expanded) {
             return;
         }
@@ -178,15 +186,19 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         for (View expandableView : expandableViews) {
-            animateHeight(expandableView, expandableView.getMeasuredHeight());
+            animateHeight(expandableView, expandableView.getMeasuredHeight(), animate);
         }
 
-        if (animatorSet != null) {
+        if (animatorSet != null && animate) {
             animatorSet.start();
         }
     }
 
     public void collapse() {
+        collapse(true);
+    }
+
+    public void collapse(boolean animate) {
         if (!expanded) {
             return;
         }
@@ -199,10 +211,10 @@ public class ExpandableLinearLayout extends LinearLayout {
         expanded = false;
 
         for (View expandableView : expandableViews) {
-            animateHeight(expandableView, 0);
+            animateHeight(expandableView, 0, animate);
         }
 
-        if (animatorSet != null) {
+        if (animatorSet != null && animate) {
             animatorSet.start();
         }
     }
@@ -211,7 +223,7 @@ public class ExpandableLinearLayout extends LinearLayout {
         this.listener = listener;
     }
 
-    private void animateHeight(final View view, final int targetHeight) {
+    private void animateHeight(final View view, final int targetHeight, boolean animate) {
         if (animatorSet == null) {
             animatorSet = new AnimatorSet();
             animatorSet.setInterpolator(interpolator);
@@ -221,6 +233,24 @@ public class ExpandableLinearLayout extends LinearLayout {
         final LayoutParams lp = (LayoutParams) view.getLayoutParams();
         lp.weight = 0;
         int height = view.getHeight();
+
+        if (!animate) {
+            lp.height = targetHeight;
+            view.requestLayout();
+
+            if (targetHeight == 0) {
+                view.setVisibility(GONE);
+            } else {
+                lp.height = lp.originalHeight;
+                lp.weight = lp.originalWeight;
+            }
+
+            if (listener != null) {
+                listener.onExpansionUpdate(targetHeight == 0 ? 0f : 1f);
+            }
+
+            return;
+        }
 
         ValueAnimator animator = ValueAnimator.ofInt(height, targetHeight);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
