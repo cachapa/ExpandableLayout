@@ -186,7 +186,11 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         for (View expandableView : expandableViews) {
-            animateHeight(expandableView, expandableView.getMeasuredHeight(), animate);
+            if (animate) {
+                animateHeight(expandableView, expandableView.getMeasuredHeight());
+            } else {
+                setHeight(expandableView, expandableView.getMeasuredHeight());
+            }
         }
 
         if (animatorSet != null && animate) {
@@ -211,7 +215,11 @@ public class ExpandableLinearLayout extends LinearLayout {
         expanded = false;
 
         for (View expandableView : expandableViews) {
-            animateHeight(expandableView, 0, animate);
+            if (animate) {
+                animateHeight(expandableView, 0);
+            } else {
+                setHeight(expandableView, 0);
+            }
         }
 
         if (animatorSet != null && animate) {
@@ -223,7 +231,7 @@ public class ExpandableLinearLayout extends LinearLayout {
         this.listener = listener;
     }
 
-    private void animateHeight(final View view, final int targetHeight, boolean animate) {
+    private void animateHeight(final View view, final int targetHeight) {
         if (animatorSet == null) {
             animatorSet = new AnimatorSet();
             animatorSet.setInterpolator(interpolator);
@@ -233,24 +241,6 @@ public class ExpandableLinearLayout extends LinearLayout {
         final LayoutParams lp = (LayoutParams) view.getLayoutParams();
         lp.weight = 0;
         int height = view.getHeight();
-
-        if (!animate) {
-            lp.height = targetHeight;
-            view.requestLayout();
-
-            if (targetHeight == 0) {
-                view.setVisibility(GONE);
-            } else {
-                lp.height = lp.originalHeight;
-                lp.weight = lp.originalWeight;
-            }
-
-            if (listener != null) {
-                listener.onExpansionUpdate(targetHeight == 0 ? 0f : 1f);
-            }
-
-            return;
-        }
 
         ValueAnimator animator = ValueAnimator.ofInt(height, targetHeight);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -291,6 +281,23 @@ public class ExpandableLinearLayout extends LinearLayout {
         });
 
         animatorSet.playTogether(animator);
+    }
+
+    private void setHeight(View view, int targetHeight) {
+        LayoutParams lp = (LayoutParams) view.getLayoutParams();
+        
+        if (targetHeight == 0) {
+            view.setVisibility(GONE);
+        } else {
+            lp.height = lp.originalHeight;
+            lp.weight = lp.originalWeight;
+            
+            view.requestLayout();
+        }
+        
+        if (listener != null) {
+            listener.onExpansionUpdate(targetHeight == 0 ? 0f : 1f);
+        }
     }
 
 
