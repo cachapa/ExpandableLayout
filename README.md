@@ -35,25 +35,16 @@ ExpandableLinearLayout supports animating:
 
 ## Usage
 
-Add the following lines to your root build.gradle:
-
-``` gradle
-allprojects {
-    repositories {
-        [...]
-        maven { url "https://jitpack.io" }
-    }
-}
-```
-
-Then reference the library from your module's build.gradle:
+Reference the library from your module's build.gradle:
 
 ``` gradle
 dependencies {
     [...]
-    compile 'com.github.cachapa:expandablelayout:1.2'
+    compile 'net.cachapa.expandablelayout:expandablelayout:[latest_version]'
 }
 ```
+
+Latest version: [ ![Download](https://api.bintray.com/packages/cachapa/maven/expandablelayout/images/download.svg) ](https://bintray.com/cachapa/maven/expandablelayout/_latestVersion)
 
 Add the ExpandableLinearLayout as the root of the layout you want to make expandable, and mark the relevant child views as expandable using the `layout_expandable` tag:
 
