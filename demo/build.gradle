@@ -15,7 +15,7 @@ android {
 
 dependencies {
     compile project(path: ':lib')
-//    compile 'net.cachapa.expandablelayout:expandablelayout:1.2'
+//    compile 'net.cachapa.expandablelayout:expandablelayout:1.3'
 
     compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:appcompat-v7:24.0.0'
