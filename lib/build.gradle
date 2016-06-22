@@ -13,10 +13,6 @@ android {
     }
 }
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
-}
-
 publish {
     userOrg = 'cachapa'
     repoName = 'maven'

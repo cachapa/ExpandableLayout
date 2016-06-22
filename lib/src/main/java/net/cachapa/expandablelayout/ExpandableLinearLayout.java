@@ -11,12 +11,13 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
+
+import net.cachapa.expandablelayout.util.FastOutSlowInInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
