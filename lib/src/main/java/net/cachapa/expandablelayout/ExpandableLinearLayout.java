@@ -41,6 +41,7 @@ public class ExpandableLinearLayout extends LinearLayout {
     private AnimatorSet animatorSet;
 
     private OnExpansionUpdateListener listener;
+    private boolean toggleOnClick;
 
     public ExpandableLinearLayout(Context context) {
         super(context);
@@ -68,6 +69,7 @@ public class ExpandableLinearLayout extends LinearLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expanded = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false);
+            toggleOnClick = a.getBoolean(R.styleable.ExpandableLayout_el_toggle_on_click, false);
             a.recycle();
         }
 
@@ -75,6 +77,15 @@ public class ExpandableLinearLayout extends LinearLayout {
 
         // We only support vertical layouts for now
         setOrientation(VERTICAL);
+        if (toggleOnClick) {
+            setClickable(true);
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggle();
+                }
+            });
+        }
     }
 
     @Override

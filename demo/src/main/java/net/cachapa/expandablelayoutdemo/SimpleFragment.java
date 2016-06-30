@@ -7,25 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.cachapa.expandablelayout.ExpandableLinearLayout;
-
-public class SimpleFragment extends Fragment implements View.OnClickListener {
-
-    private ExpandableLinearLayout expandableLayout;
+public class SimpleFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.simple_fragment, container, false);
-
-        expandableLayout = (ExpandableLinearLayout) rootView.findViewById(R.id.expandable_layout);
-        rootView.findViewById(R.id.expand_button).setOnClickListener(this);
-
-        return rootView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        expandableLayout.toggle();
+        return inflater.inflate(R.layout.simple_fragment, container, false);
     }
 }

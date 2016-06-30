@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:el_duration="1000"
-    app:el_expanded="true">
+    app:el_expanded="true"
+    app:el_toggle_on_click="true"
+    >
 
     <TextView
         android:id="@+id/expand_button"
