@@ -5,6 +5,7 @@
         <attr name="el_duration" format="integer" />
         <attr name="el_expanded" format="boolean" />
         <attr name="layout_expandable" format="boolean" />
+        <attr name="el_toggle_on_click" format="boolean" />
     </declare-styleable>
 
 </resources>
