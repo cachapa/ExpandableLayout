@@ -41,6 +41,8 @@ public class ExpandableLinearLayout extends LinearLayout {
     private AnimatorSet animatorSet;
 
     private OnExpansionUpdateListener listener;
+    private ExpandListener expandListener;
+
     private boolean toggleOnClick;
 
     public ExpandableLinearLayout(Context context) {
@@ -186,6 +188,7 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         expanded = true;
+        notifyExpanded();
 
         for (View expandableView : expandableViews) {
             LayoutParams lp = (LayoutParams) expandableView.getLayoutParams();
@@ -225,7 +228,7 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         expanded = false;
-
+        notifyExpanded();
         for (View expandableView : expandableViews) {
             if (animate) {
                 animateHeight(expandableView, 0);
@@ -239,8 +242,17 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
     }
 
+    private void notifyExpanded() {
+        if(expandListener!=null)
+            expandListener.onToggle(expanded);
+    }
+
     public void setOnExpansionUpdateListener(OnExpansionUpdateListener listener) {
         this.listener = listener;
+    }
+
+    public void setExpandListener(ExpandListener expandListener) {
+        this.expandListener = expandListener;
     }
 
     private void animateHeight(final View view, final int targetHeight) {
@@ -297,16 +309,16 @@ public class ExpandableLinearLayout extends LinearLayout {
 
     private void setHeight(View view, int targetHeight) {
         LayoutParams lp = (LayoutParams) view.getLayoutParams();
-        
+
         if (targetHeight == 0) {
             view.setVisibility(GONE);
         } else {
             lp.height = lp.originalHeight;
             lp.weight = lp.originalWeight;
-            
+
             view.requestLayout();
         }
-        
+
         if (listener != null) {
             listener.onExpansionUpdate(targetHeight == 0 ? 0f : 1f);
         }
@@ -330,5 +342,9 @@ public class ExpandableLinearLayout extends LinearLayout {
 
     public interface OnExpansionUpdateListener {
         void onExpansionUpdate(float expansionFraction);
+    }
+
+    public interface ExpandListener {
+        void onToggle(boolean expanded);
     }
 }
