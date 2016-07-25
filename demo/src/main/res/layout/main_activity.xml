@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
+        android:elevation="8dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="#fff"
         app:tabTextColor="#dfff" />
