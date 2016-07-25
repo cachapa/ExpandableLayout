@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:el_duration="500"
-        app:el_expanded="true">
+        app:el_expanded="false">
 
         <TextView
             android:id="@+id/expand_button_0"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:el_duration="500"
-        app:el_expanded="false">
+        app:el_expanded="true">
 
         <TextView
             android:id="@+id/expand_button_1"
