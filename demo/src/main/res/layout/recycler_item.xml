@@ -24,14 +24,13 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:clipToPadding="false"
             android:elevation="4dp"
             android:gravity="center"
-            android:text="Fixed height"
-            android:textColor="#fff"
-            app:layout_expandable="true" />
+            android:padding="16dp"
+            android:text="Content"
+            android:textColor="#fff" />
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 

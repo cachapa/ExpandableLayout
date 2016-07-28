@@ -20,7 +20,7 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Click here to toggle expansion"
+            android:text="Tap to toggle expansion"
             android:textColor="#fff" />
 
         <net.cachapa.expandablelayout.ExpandableLayout
@@ -60,7 +60,7 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Click here to toggle expansion"
+            android:text="Tap to toggle expansion"
             android:textColor="#fff" />
 
         <net.cachapa.expandablelayout.ExpandableLayout

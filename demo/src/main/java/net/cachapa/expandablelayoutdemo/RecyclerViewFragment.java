@@ -13,7 +13,6 @@ import android.widget.TextView;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class RecyclerViewFragment extends Fragment {
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,12 +20,20 @@ public class RecyclerViewFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new SimpleAdapter());
-
+        recyclerView.setAdapter(new SimpleAdapter(recyclerView));
+        
         return rootView;
     }
-
+    
     private static class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder> {
+        private static final int UNSELECTED = -1;
+        
+        private RecyclerView recyclerView;
+        private int selectedItem = UNSELECTED;
+
+        public SimpleAdapter(RecyclerView recyclerView) {
+            this.recyclerView = recyclerView;
+        }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,10 +52,11 @@ public class RecyclerViewFragment extends Fragment {
             return 100;
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnFocusChangeListener {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private ExpandableLayout expandableLayout;
             private TextView expandButton;
+            private int position;
 
             public ViewHolder(View itemView) {
                 super(itemView);
@@ -57,29 +65,31 @@ public class RecyclerViewFragment extends Fragment {
                 expandButton = (TextView) itemView.findViewById(R.id.expand_button);
 
                 expandButton.setOnClickListener(this);
-                expandButton.setFocusableInTouchMode(true);
-                expandButton.setOnFocusChangeListener(this);
             }
 
             public void bind(int position) {
-                expandButton.setText(position + ". Click to expand");
+                this.position = position;
+                
+                expandButton.setText(position + ". Tap to expand");
+                
+                expandButton.setSelected(false);
+                expandableLayout.collapse(false);
             }
 
             @Override
             public void onClick(View view) {
-                if (expandButton.isFocused()) {
-                    expandButton.clearFocus();
-                } else {
-                    expandButton.requestFocus();
+                ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(selectedItem);
+                if (holder != null) {
+                    holder.expandButton.setSelected(false);
+                    holder.expandableLayout.collapse();
                 }
-            }
-
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                if (focused) {
-                    expandableLayout.expand();
+                
+                if (position == selectedItem) {
+                    selectedItem = UNSELECTED;
                 } else {
-                    expandableLayout.collapse();
+                    expandButton.setSelected(true);
+                    expandableLayout.expand();
+                    selectedItem = position;
                 }
             }
         }
