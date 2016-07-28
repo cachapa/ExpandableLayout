@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import net.cachapa.expandablelayout.ExpandableLinearLayout;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class RecyclerViewFragment extends Fragment {
 
@@ -47,13 +47,13 @@ public class RecyclerViewFragment extends Fragment {
 
         public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnFocusChangeListener {
 
-            private ExpandableLinearLayout expandableLayout;
+            private ExpandableLayout expandableLayout;
             private TextView expandButton;
 
             public ViewHolder(View itemView) {
                 super(itemView);
 
-                expandableLayout = (ExpandableLinearLayout) itemView.findViewById(R.id.expandable_layout);
+                expandableLayout = (ExpandableLayout) itemView.findViewById(R.id.expandable_layout);
                 expandButton = (TextView) itemView.findViewById(R.id.expand_button);
 
                 expandButton.setOnClickListener(this);

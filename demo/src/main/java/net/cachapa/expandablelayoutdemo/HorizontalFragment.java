@@ -7,18 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.cachapa.expandablelayout.ExpandableLinearLayout;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class HorizontalFragment extends Fragment implements View.OnClickListener {
 
-    private ExpandableLinearLayout expandableLayout;
+    private ExpandableLayout expandableLayout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.horizontal_fragment, container, false);
 
-        expandableLayout = (ExpandableLinearLayout) rootView.findViewById(R.id.expandable_layout);
+        expandableLayout = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout);
         rootView.findViewById(R.id.expand_button).setOnClickListener(this);
 
         return rootView;

@@ -10,10 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] TAB_TITLES = {
-        "Simple",
-        "Accordion",
-        "Recycler",
-        "Horizontal"
+            "Simple",
+            "Accordion",
+            "Recycler",
+            "Horizontal"
     };
 
     @Override
@@ -28,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private class simpleAdapter extends FragmentPagerAdapter{
+    private class simpleAdapter extends FragmentPagerAdapter {
         public simpleAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return TAB_TITLES.length;
         }
 
         @Override
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     return new HorizontalFragment();
             }
-            
+
             throw new IllegalStateException("There's no fragment for position " + position);
         }
 
