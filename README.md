@@ -8,21 +8,26 @@ This library offloads as much work as possible to the parent layout to ensure th
 
 Currently the only implemented expandable layout is based on the framework's LinearLayout since it supports all of the requirements for my current use cases. If the need for other variants arises, it should be easy to adapt the current solution to a FrameLayout, RelativeLayout or others.
 
+## Note to current users ##
+
+I've decided to redesign how the expansion animation works. Instead of gradualy increasing the size of the child views, they now remain the same size and are instead "pushed" in or out of view. The new method:
+
+* Is more efficient since the child view doesn't run a layout pass in each frame
+* Looks better since the items inside the the child view don't adjust during the animation
+* Contains a lot less code, and therefore less chances to break
+* Has a simpler API
+
+The new implementation is contained in the `ExpandableLayout` class. Since the API is slightly different, I've kept the old implementation in the `ExpandableLinearLayout` class. If you're already using older versions of this library, you don't have to change anything.
+
+In any case I recommend you look at the new class. A demo of the API is shown in the `ExpandableLayoutDemo` included with this project.
+
 ## Features
 
-ExpandableLinearLayout supports animating:
+ExpandableLayout supports animating:
 
-* Views with a fixed height:
+* Views with fixed and variable heights:
 
-![fixed](images/expandable_fixed.gif)
-
-* Views with fill height (usually using weight > 0):
-
-![fill](images/expandable_fill.gif)
-
-* Multiple views simultaneously:
-
-![parallel](images/expandable_parallel.gif)
+![simple](images/expandable_simple.gif)
 
 * "Accordion" expansion (using two expandable layouts)
 
@@ -32,6 +37,9 @@ ExpandableLinearLayout supports animating:
 
 ![recycler](images/expandable_recycler.gif)
 
+* Horizontal expansion
+
+![horizontal](images/expandable_horizontal.gif)
 
 ## Usage
 
@@ -46,34 +54,29 @@ dependencies {
 
 Latest version: [ ![Download](https://api.bintray.com/packages/cachapa/maven/expandablelayout/images/download.svg) ](https://bintray.com/cachapa/maven/expandablelayout/_latestVersion)
 
-Add the ExpandableLinearLayout as the root of the layout you want to make expandable, and mark the relevant child views as expandable using the `layout_expandable` tag:
+Add `ExpandableLayout` as a container to the layout or views you want to make expandable:
 
 ``` xml
-<net.cachapa.expandablelayout.ExpandableLinearLayout
-    android:id="@+id/container"
+<net.cachapa.expandablelayout.ExpandableLayout
+    android:id="@+id/expandable_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:el_duration="1000"
     app:el_expanded="true">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click here to toggle expansion" />
+        android:padding="16dp"
+        android:text="Fixed height" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Fixed height"
-        app:layout_expandable="true" />
-
-</net.cachapa.expandablelayout.ExpandableLinearLayout>
+</net.cachapa.expandablelayout.ExpandableLayout>
 ```
 Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively.
 
-To trigger the animation, simply grab a reference to the ExpandableLinearLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
+To trigger the animation, simply grab a reference to the ExpandableLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
 
-A full demo of the library is included with the project under the `demo` directory.
+A full demo of the library is included with the project.
 
 ## License
 
