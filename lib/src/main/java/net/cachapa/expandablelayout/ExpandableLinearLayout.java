@@ -29,11 +29,13 @@ public class ExpandableLinearLayout extends LinearLayout {
 
     private static final int DEFAULT_DURATION = 300;
 
-    private List<View> expandableViews = new ArrayList<>();
+    private int wms;
+    private int hms;
+
+    private List<View> expandableViews;
 
     private int duration = DEFAULT_DURATION;
     private boolean expanded = false;
-    private float expansion;
 
     private Interpolator interpolator = new FastOutSlowInInterpolator();
     private AnimatorSet animatorSet;
@@ -68,8 +70,8 @@ public class ExpandableLinearLayout extends LinearLayout {
             expanded = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false);
             a.recycle();
         }
-        
-        expansion = expanded ? 1 : 0;
+
+        expandableViews = new ArrayList<>();
     }
 
     @Override
@@ -120,28 +122,9 @@ public class ExpandableLinearLayout extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        
-        int expansionDelta = 0;
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
-            if (lp.expandable) {
-                expansionDelta += child.getHeight() - child.getHeight() * expansion;
-//                int hh = (int) (child.getHeight() - child.getHeight() * expansion);
-                
-                lp.height = 100;
-                child.requestLayout();
-            }
-
-            child.setTranslationY(-expansionDelta);
-            
-//            if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST || MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.UNSPECIFIED) {
-//                setMeasuredDimension(width, height - expansionDelta);
-//            }
-        }
+        wms = widthMeasureSpec;
+        hms = heightMeasureSpec;
     }
 
     @Override
@@ -182,18 +165,34 @@ public class ExpandableLinearLayout extends LinearLayout {
         if (expanded) {
             return;
         }
-        
+
         if (animatorSet != null) {
             animatorSet.cancel();
             animatorSet = null;
         }
-        
+
         expanded = true;
 
-        if (animate) {
-            animateSize(1);
-        } else {
-//                setSize(expandableView, 0);
+        for (View expandableView : expandableViews) {
+            LayoutParams lp = (LayoutParams) expandableView.getLayoutParams();
+
+            // Calculate view's original height
+            expandableView.setVisibility(View.VISIBLE);
+            lp.width = lp.originalWidth;
+            lp.height = lp.originalHeight;
+            lp.weight = lp.originalWeight;
+            super.onMeasure(wms, hms);
+        }
+
+        for (View expandableView : expandableViews) {
+            int targetSize = getOrientation() == HORIZONTAL
+                    ? expandableView.getMeasuredWidth() : expandableView.getMeasuredHeight();
+
+            if (animate) {
+                animateSize(expandableView, targetSize);
+            } else {
+                setSize(expandableView, targetSize);
+            }
         }
 
         if (animatorSet != null && animate) {
@@ -217,11 +216,13 @@ public class ExpandableLinearLayout extends LinearLayout {
 
         expanded = false;
 
+        for (View expandableView : expandableViews) {
             if (animate) {
-                animateSize(0);
+                animateSize(expandableView, 0);
             } else {
-//                setSize(expandableView, 0);
+                setSize(expandableView, 0);
             }
+        }
 
         if (animatorSet != null && animate) {
             animatorSet.start();
@@ -232,41 +233,55 @@ public class ExpandableLinearLayout extends LinearLayout {
         this.listener = listener;
     }
 
-    private void animateSize(int targetExpansion) {
+    private void animateSize(final View view, final int targetSize) {
         if (animatorSet == null) {
             animatorSet = new AnimatorSet();
             animatorSet.setInterpolator(interpolator);
             animatorSet.setDuration(duration);
         }
 
-        ValueAnimator animator = ValueAnimator.ofFloat(expansion, targetExpansion);
+        final LayoutParams lp = (LayoutParams) view.getLayoutParams();
+        lp.weight = 0;
+
+        int currentSize;
+        if (getOrientation() == HORIZONTAL) {
+            currentSize = view.getWidth();
+        } else {
+            currentSize = view.getHeight();
+        }
+
+        ValueAnimator animator = ValueAnimator.ofInt(currentSize, targetSize);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                expansion = (float) valueAnimator.getAnimatedValue();
-                requestLayout();
+                if (getOrientation() == HORIZONTAL) {
+                    view.getLayoutParams().width = (Integer) valueAnimator.getAnimatedValue();
+                } else {
+                    view.getLayoutParams().height = (Integer) valueAnimator.getAnimatedValue();
+                }
+                view.requestLayout();
 
                 if (listener != null) {
-//                    float fraction = targetExpansion == 0 ? 1 - valueAnimator.getAnimatedFraction() : valueAnimator.getAnimatedFraction();
-//                    listener.onExpansionUpdate(fraction);
+                    float fraction = targetSize == 0 ? 1 - valueAnimator.getAnimatedFraction() : valueAnimator.getAnimatedFraction();
+                    listener.onExpansionUpdate(fraction);
                 }
             }
         });
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-//                view.setVisibility(View.VISIBLE);
+                view.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
-//                if (targetExpansion == 0) {
-//                    view.setVisibility(GONE);
-//                } else {
-//                    lp.width = lp.originalWidth;
-//                    lp.height = lp.originalHeight;
-//                    lp.weight = lp.originalWeight;
-//                }
+                if (targetSize == 0) {
+                    view.setVisibility(GONE);
+                } else {
+                    lp.width = lp.originalWidth;
+                    lp.height = lp.originalHeight;
+                    lp.weight = lp.originalWeight;
+                }
             }
 
             @Override
@@ -280,6 +295,25 @@ public class ExpandableLinearLayout extends LinearLayout {
 
         animatorSet.playTogether(animator);
     }
+
+    private void setSize(View view, int targetSize) {
+        LayoutParams lp = (LayoutParams) view.getLayoutParams();
+
+        if (targetSize == 0) {
+            view.setVisibility(GONE);
+        } else {
+            lp.width = lp.originalWidth;
+            lp.height = lp.originalHeight;
+            lp.weight = lp.originalWeight;
+
+            view.requestLayout();
+        }
+
+        if (listener != null) {
+            listener.onExpansionUpdate(targetSize == 0 ? 0f : 1f);
+        }
+    }
+
 
     public static class LayoutParams extends LinearLayout.LayoutParams {
         private final boolean expandable;
