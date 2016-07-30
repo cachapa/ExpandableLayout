@@ -19,7 +19,7 @@ I've decided to redesign how the expansion animation works. Instead of gradualy 
 
 The new implementation is contained in the `ExpandableLayout` class. Since the API is slightly different, I've kept the old implementation in the `ExpandableLinearLayout` class. If you're already using older versions of this library, you don't have to change anything.
 
-In any case I recommend you look at the new class. A demo of the API is shown in the `ExpandableLayoutDemo` included with this project.
+In any case I recommend you look at the new class. A demo of the new API is shown in the `demo` module included with this project. The old API is demonstrated in the `legacy_demo` module.
 
 ## Features
 
@@ -27,19 +27,19 @@ ExpandableLayout supports animating:
 
 * Views with fixed and variable heights:
 
-![simple](images/expandable_simple.gif)
+![simple](images/simple.gif)
 
 * "Accordion" expansion (using two expandable layouts)
 
-![accordion](images/expandable_accordion.gif)
+![accordion](images/accordion.gif)
 
 * RecyclerView items
 
-![recycler](images/expandable_recycler.gif)
+![recycler](images/recycler.gif)
 
 * Horizontal expansion
 
-![horizontal](images/expandable_horizontal.gif)
+![horizontal](images/horizontal.gif)
 
 ## Usage
 
