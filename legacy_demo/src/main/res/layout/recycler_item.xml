@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.cachapa.expandablelayout.ExpandableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expandable_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:el_duration="300"
+    app:el_expanded="false">
+
+    <TextView
+        android:id="@+id/expand_button"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_item_background"
+        android:elevation="6dp"
+        android:foreground="?selectableItemBackground"
+        android:padding="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:clipToPadding="false"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:text="Fixed height"
+        android:textColor="#fff"
+        app:layout_expandable="true" />
+
+</net.cachapa.expandablelayout.ExpandableLinearLayout>

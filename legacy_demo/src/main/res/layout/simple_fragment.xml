@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.cachapa.expandablelayout.ExpandableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expandable_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:el_duration="1000"
+    app:el_expanded="true">
+
+    <TextView
+        android:id="@+id/expand_button"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:windowBackground"
+        android:elevation="6dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Click here to toggle expansion" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00b300"
+        android:clipToPadding="false"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:text="Fixed height"
+        android:textColor="#fff"
+        app:layout_expandable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#00f"
+        android:gravity="center"
+        android:text="Fill height"
+        android:textColor="#fff"
+        app:layout_expandable="true" />
+
+</net.cachapa.expandablelayout.ExpandableLinearLayout>
