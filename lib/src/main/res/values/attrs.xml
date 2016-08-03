@@ -4,6 +4,7 @@
     <declare-styleable name="ExpandableLayout">
         <attr name="el_duration" format="integer" />
         <attr name="el_expanded" format="boolean" />
+        <attr name="el_minHeight" format="dimension" />
         <attr name="layout_expandable" format="boolean" />
         <attr name="orientation">
             <enum name="horizontal" value="0" />
