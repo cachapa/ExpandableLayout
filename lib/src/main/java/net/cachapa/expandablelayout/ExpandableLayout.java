@@ -29,6 +29,7 @@ public class ExpandableLayout extends FrameLayout {
     private boolean expanded;
     private float expansion;
     private int orientation;
+    private float minHeight;
 
     private Interpolator interpolator = new FastOutSlowInInterpolator();
     private ValueAnimator animatorSet;
@@ -62,6 +63,7 @@ public class ExpandableLayout extends FrameLayout {
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expanded = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false);
             orientation = a.getInt(R.styleable.ExpandableLayout_orientation, VERTICAL);
+            minHeight = a.getDimension(R.styleable.ExpandableLayout_el_minHeight, 0);
             a.recycle();
         }
 
@@ -188,7 +190,7 @@ public class ExpandableLayout extends FrameLayout {
             animatorSet = null;
         }
 
-        animatorSet = ValueAnimator.ofFloat(expansion, targetExpansion);
+        animatorSet = ValueAnimator.ofFloat(expansion, targetExpansion + minHeight);
         animatorSet.setInterpolator(interpolator);
         animatorSet.setDuration(duration);
 
