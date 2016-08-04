@@ -5,10 +5,7 @@
         <attr name="el_duration" format="integer" />
         <attr name="el_expanded" format="boolean" />
         <attr name="layout_expandable" format="boolean" />
-        <attr name="orientation">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-        </attr>
+        <attr name="android:orientation"/>
     </declare-styleable>
 
 </resources>

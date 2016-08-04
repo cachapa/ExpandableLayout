@@ -61,7 +61,7 @@ public class ExpandableLayout extends FrameLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expanded = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false);
-            orientation = a.getInt(R.styleable.ExpandableLayout_orientation, VERTICAL);
+            orientation = a.getInt(R.styleable.ExpandableLayout_android_orientation, VERTICAL);
             a.recycle();
         }
 

@@ -28,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00f"
+            android:orientation="horizontal"
             app:el_duration="1000"
-            app:el_expanded="false"
-            app:orientation="horizontal">
+            app:el_expanded="false">
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
