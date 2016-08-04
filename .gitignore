@@ -12,3 +12,6 @@ local.properties
 
 # MacOS
 .DS_Store
+
+# Helper scripts
+publish_jcenter.sh
