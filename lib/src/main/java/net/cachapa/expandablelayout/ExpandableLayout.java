@@ -99,7 +99,7 @@ public class ExpandableLayout extends FrameLayout {
 
         int size = orientation == LinearLayout.HORIZONTAL ? width : height;
 
-        setVisibility(size == 0 ? GONE : VISIBLE);
+        setVisibility(!expanded && size == 0 ? GONE : VISIBLE);
 
         int expansionDelta = (int) (size - size * expansion);
         for (int i = 0; i < getChildCount(); i++) {
@@ -170,6 +170,8 @@ public class ExpandableLayout extends FrameLayout {
         if (expand == expanded) {
             return;
         }
+
+        if (expand) setVisibility(VISIBLE);
 
         expanded = expand;
 
