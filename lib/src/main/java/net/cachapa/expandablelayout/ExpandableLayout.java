@@ -101,7 +101,7 @@ public class ExpandableLayout extends FrameLayout {
 
         setVisibility(!expanded && size == 0 ? GONE : VISIBLE);
 
-        int expansionDelta = (int) (size - size * expansion);
+        int expansionDelta = size - Math.round(size * expansion);
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             if (orientation == HORIZONTAL) {
