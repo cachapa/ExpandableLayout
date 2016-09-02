@@ -27,6 +27,7 @@ public class ExpandableLayout extends FrameLayout {
 
     private int duration = DEFAULT_DURATION;
     private boolean expanded;
+    private boolean translateChildren;
     private float expansion;
     private int orientation;
 
@@ -61,6 +62,7 @@ public class ExpandableLayout extends FrameLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expanded = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false);
+            translateChildren = a.getBoolean(R.styleable.ExpandableLayout_el_translate_children, true);
             orientation = a.getInt(R.styleable.ExpandableLayout_android_orientation, VERTICAL);
             a.recycle();
         }
@@ -102,12 +104,14 @@ public class ExpandableLayout extends FrameLayout {
         setVisibility(!expanded && size == 0 ? GONE : VISIBLE);
 
         int expansionDelta = size - Math.round(size * expansion);
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (orientation == HORIZONTAL) {
-                child.setTranslationX(-expansionDelta);
-            } else {
-                child.setTranslationY(-expansionDelta);
+        if (translateChildren) {
+            for (int i = 0; i < getChildCount(); i++) {
+                View child = getChildAt(i);
+                if (orientation == HORIZONTAL) {
+                    child.setTranslationX(-expansionDelta);
+                } else {
+                    child.setTranslationY(-expansionDelta);
+                }
             }
         }
 

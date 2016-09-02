@@ -4,6 +4,7 @@
     <declare-styleable name="ExpandableLayout">
         <attr name="el_duration" format="integer" />
         <attr name="el_expanded" format="boolean" />
+        <attr name="el_translate_children" format="boolean" />
         <attr name="layout_expandable" format="boolean" />
         <attr name="android:orientation"/>
     </declare-styleable>
