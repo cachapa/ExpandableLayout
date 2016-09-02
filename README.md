@@ -8,7 +8,7 @@ This library offloads as much work as possible to the parent layout to ensure th
 
 Currently the only implemented expandable layout is based on the framework's LinearLayout since it supports all of the requirements for my current use cases. If the need for other variants arises, it should be easy to adapt the current solution to a FrameLayout, RelativeLayout or others.
 
-## Note to current users ##
+## Note to current users
 
 I've decided to redesign how the expansion animation works. Instead of gradualy increasing the size of the child views, they now remain the same size and are instead "pushed" in or out of view. The new method:
 
@@ -62,7 +62,8 @@ Add `ExpandableLayout` as a container to the layout or views you want to make ex
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:el_duration="1000"
-    app:el_expanded="true">
+    app:el_expanded="true"
+    app:el_translate_children="true">
 
     <TextView
         android:layout_width="match_parent"
@@ -72,7 +73,7 @@ Add `ExpandableLayout` as a container to the layout or views you want to make ex
 
 </net.cachapa.expandablelayout.ExpandableLayout>
 ```
-Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively.
+Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively. The `el_translate_children` flag determines if the child view should be translated during expansion.
 
 To trigger the animation, simply grab a reference to the ExpandableLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
 
