@@ -6,9 +6,12 @@ I built this because all of the available libraries I tested were missing featur
 
 This library offloads as much work as possible to the parent layout to ensure that the rendering and size calculations behave as expected. This means that even complex features such as LinearLayout's `weight` tag are properly supported.
 
-Currently the only implemented expandable layout is based on the framework's LinearLayout since it supports all of the requirements for my current use cases. If the need for other variants arises, it should be easy to adapt the current solution to a FrameLayout, RelativeLayout or others.
+### Try the demo
 
-## Note to current users
+[![Google Play Store badge](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=net.cachapa.expandablelayoutdemo)
+
+
+### Note to current users
 
 I've decided to redesign how the expansion animation works. Instead of gradualy increasing the size of the child views, they now remain the same size and are instead "pushed" in or out of view. The new method:
 
@@ -21,7 +24,7 @@ The new implementation is contained in the `ExpandableLayout` class. Since the A
 
 In any case I recommend you look at the new class. A demo of the new API is shown in the `demo` module included with this project. The old API is demonstrated in the `legacy_demo` module.
 
-## Features
+### Features
 
 ExpandableLayout supports animating:
 
@@ -41,7 +44,7 @@ ExpandableLayout supports animating:
 
 ![horizontal](images/horizontal.gif)
 
-## Usage
+### Usage
 
 Reference the library from your module's build.gradle:
 
@@ -79,7 +82,7 @@ To trigger the animation, simply grab a reference to the ExpandableLayout from y
 
 A full demo of the library is included with the project.
 
-## License
+### License
 
     Copyright 2016 Daniel Cachapa.
 
@@ -95,6 +98,6 @@ A full demo of the library is included with the project.
     See the License for the specific language governing permissions and
     limitations under the License.
 
-## Footnotes
+### Footnotes
 
 Gifs were generated using the following script: https://gist.github.com/cachapa/aa829bfc717fc4f1d52c568d7ae8521e
