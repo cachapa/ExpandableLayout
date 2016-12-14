@@ -13,5 +13,8 @@ local.properties
 # MacOS
 .DS_Store
 
+# Signing key
+*.jks
+
 # Helper scripts
 publish_jcenter.sh
