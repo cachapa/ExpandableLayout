@@ -2,11 +2,9 @@ package net.cachapa.expandablelayout;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -25,8 +23,8 @@ public class ExpandableLayout extends FrameLayout {
     public static final String KEY_SUPER_STATE = "super_state";
     public static final String KEY_EXPANSION = "expansion";
 
-    private static final int HORIZONTAL = 0;
-    private static final int VERTICAL = 1;
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
 
     private static final int DEFAULT_DURATION = 300;
 
@@ -42,27 +40,12 @@ public class ExpandableLayout extends FrameLayout {
     private OnExpansionUpdateListener listener;
 
     public ExpandableLayout(Context context) {
-        super(context);
-        init(null);
+        this(context, null);
     }
 
     public ExpandableLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs);
-    }
 
-    public ExpandableLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ExpandableLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs);
-    }
-
-    private void init(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
@@ -165,6 +148,18 @@ public class ExpandableLayout extends FrameLayout {
         setExpanded(false, animate);
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public float getExpansion() {
+        return expansion;
+    }
+
     public void setExpansion(float expansion) {
         if (this.expansion == expansion) {
             return;
@@ -180,12 +175,27 @@ public class ExpandableLayout extends FrameLayout {
         }
     }
 
-    public void setOnExpansionUpdateListener(OnExpansionUpdateListener listener) {
-        this.listener = listener;
+    public boolean getTranslateChildren() {
+        return translateChildren;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setTranslateChildren(boolean translateChildren) {
+        this.translateChildren = translateChildren;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        if (orientation < 0 || orientation > 1) {
+            throw new IllegalArgumentException("Orientation must be either 0 (horizontal) or 1 (vertical)");
+        }
+        this.orientation = orientation;
+    }
+
+    public void setOnExpansionUpdateListener(OnExpansionUpdateListener listener) {
+        this.listener = listener;
     }
 
     private void setExpanded(boolean expand, boolean animate) {
