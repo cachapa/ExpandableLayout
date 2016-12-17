@@ -156,6 +156,10 @@ public class ExpandableLayout extends FrameLayout {
         return duration;
     }
 
+    public void setInterpolator(Interpolator interpolator) {
+        this.interpolator = interpolator;
+    }
+
     public void setDuration(int duration) {
         this.duration = duration;
     }

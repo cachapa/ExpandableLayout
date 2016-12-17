@@ -19,13 +19,13 @@
         android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         app:el_duration="300"
         app:el_expanded="false">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
             android:elevation="4dp"
             android:gravity="center"
             android:padding="16dp"

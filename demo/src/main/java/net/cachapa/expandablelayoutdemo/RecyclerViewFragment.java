@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -62,6 +63,7 @@ public class RecyclerViewFragment extends Fragment {
                 super(itemView);
 
                 expandableLayout = (ExpandableLayout) itemView.findViewById(R.id.expandable_layout);
+                expandableLayout.setInterpolator(new OvershootInterpolator());
                 expandButton = (TextView) itemView.findViewById(R.id.expand_button);
 
                 expandButton.setOnClickListener(this);
