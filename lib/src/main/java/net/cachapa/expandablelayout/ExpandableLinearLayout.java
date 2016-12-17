@@ -22,6 +22,10 @@ import net.cachapa.expandablelayout.util.FastOutSlowInInterpolator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @deprecated use {@link ExpandableLayout} instead
+ */
+@Deprecated
 public class ExpandableLinearLayout extends LinearLayout {
 
     public static final String KEY_SUPER_STATE = "super_state";
