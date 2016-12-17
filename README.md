@@ -66,7 +66,7 @@ Add `ExpandableLayout` as a container to the layout or views you want to make ex
     android:layout_height="wrap_content"
     app:el_duration="1000"
     app:el_expanded="true"
-    app:el_translate_children="true">
+    app:el_parallax="0.5">
 
     <TextView
         android:layout_width="match_parent"
@@ -76,7 +76,7 @@ Add `ExpandableLayout` as a container to the layout or views you want to make ex
 
 </net.cachapa.expandablelayout.ExpandableLayout>
 ```
-Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively. The `el_translate_children` flag determines if the child view should be translated during expansion.
+Also supported are `el_duration` and `el_expanded` tags, for specifying the duration of the animation and whether the layout should start expanded, respectively. `el_parallax` can be set to a value between 0 and 1 to control how the child view is translated during the expansion.
 
 To trigger the animation, simply grab a reference to the ExpandableLayout from your Java code and and call either of `expand()`, `collapse()` or `toggle()`.
 
