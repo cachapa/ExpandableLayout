@@ -43,7 +43,8 @@
         android:layout_weight="1"
         android:background="#f00"
         app:el_duration="1000"
-        app:el_expanded="true">
+        app:el_expanded="true"
+        app:el_parallax="0.5">
 
         <TextView
             android:layout_width="match_parent"

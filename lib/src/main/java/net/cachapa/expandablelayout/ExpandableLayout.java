@@ -29,7 +29,7 @@ public class ExpandableLayout extends FrameLayout {
     private static final int DEFAULT_DURATION = 300;
 
     private int duration = DEFAULT_DURATION;
-    private boolean translateChildren;
+    private float parallax;
     private float expansion;
     private int orientation;
     private int state = IDLE;
@@ -50,9 +50,12 @@ public class ExpandableLayout extends FrameLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expansion = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false) ? 1 : 0;
-            translateChildren = a.getBoolean(R.styleable.ExpandableLayout_el_translate_children, true);
+            float parallax = a.getBoolean(R.styleable.ExpandableLayout_el_translate_children, true) ? 1 : 0;
+            parallax = a.getFloat(R.styleable.ExpandableLayout_el_parallax, parallax);
             orientation = a.getInt(R.styleable.ExpandableLayout_android_orientation, VERTICAL);
             a.recycle();
+
+            setParallax(parallax);
         }
     }
 
@@ -90,13 +93,14 @@ public class ExpandableLayout extends FrameLayout {
         setVisibility(expansion == 0 && size == 0 ? GONE : VISIBLE);
 
         int expansionDelta = size - Math.round(size * expansion);
-        if (translateChildren) {
+        if (parallax > 0) {
+            float parallaxDelta = expansionDelta * parallax;
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
                 if (orientation == HORIZONTAL) {
-                    child.setTranslationX(-expansionDelta);
+                    child.setTranslationX(-parallaxDelta);
                 } else {
-                    child.setTranslationY(-expansionDelta);
+                    child.setTranslationY(-parallaxDelta);
                 }
             }
         }
@@ -175,12 +179,29 @@ public class ExpandableLayout extends FrameLayout {
         }
     }
 
-    public boolean getTranslateChildren() {
-        return translateChildren;
+    public float getParallax() {
+        return parallax;
     }
 
+    public void setParallax(float parallax) {
+        // Make sure parallax is between 0 and 1
+        parallax = Math.min(1, Math.max(0, parallax));
+        this.parallax = parallax;
+    }
+
+    /**
+     * @deprecated use {@link #getParallax()}  instead
+     */
+    @Deprecated
+    public boolean getTranslateChildren() {
+        return parallax > 0;
+    }
+
+    /**
+     * @deprecated use {@link #setParallax(float)} instead
+     */
     public void setTranslateChildren(boolean translateChildren) {
-        this.translateChildren = translateChildren;
+        parallax = translateChildren ? 1 : 0;
     }
 
     public int getOrientation() {
