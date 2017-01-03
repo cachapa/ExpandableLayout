@@ -6,26 +6,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:background="?android:windowBackground"
         android:elevation="6dp"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/expand_button"
-            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center"
-            android:lines="1"
-            android:padding="16dp"
-            android:text=">" />
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"
+            android:scaleType="center"
+            android:src="@drawable/ic_chevron_right_black_48dp" />
 
         <net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/expandable_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#00f"
             android:orientation="horizontal"
@@ -35,10 +32,12 @@
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#00b300"
+                android:gravity="center_vertical"
                 android:lines="1"
-                android:padding="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Expanded Content"
                 android:textColor="#fff"
                 app:layout_expandable="true" />
