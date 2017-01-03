@@ -50,9 +50,9 @@ public class ExpandableLayout extends FrameLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
             duration = a.getInt(R.styleable.ExpandableLayout_el_duration, DEFAULT_DURATION);
             expansion = a.getBoolean(R.styleable.ExpandableLayout_el_expanded, false) ? 1 : 0;
+            orientation = a.getInt(R.styleable.ExpandableLayout_android_orientation, VERTICAL);
             float parallax = a.getBoolean(R.styleable.ExpandableLayout_el_translate_children, true) ? 1 : 0;
             parallax = a.getFloat(R.styleable.ExpandableLayout_el_parallax, parallax);
-            orientation = a.getInt(R.styleable.ExpandableLayout_android_orientation, VERTICAL);
             a.recycle();
 
             setParallax(parallax);
@@ -98,7 +98,11 @@ public class ExpandableLayout extends FrameLayout {
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
                 if (orientation == HORIZONTAL) {
-                    child.setTranslationX(-parallaxDelta);
+                    int direction = -1;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1 && getLayoutDirection() == LAYOUT_DIRECTION_RTL) {
+                        direction = 1;
+                    }
+                    child.setTranslationX(direction * parallaxDelta);
                 } else {
                     child.setTranslationY(-parallaxDelta);
                 }
