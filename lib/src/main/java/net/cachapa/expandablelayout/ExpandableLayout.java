@@ -125,7 +125,7 @@ public class ExpandableLayout extends FrameLayout {
     }
 
     public boolean isExpanded() {
-        return state == EXPANDING || expansion == 1;
+        return state == EXPANDING || (Math.abs(expansion - 1) < 0.0001f);
     }
 
     public void toggle() {
