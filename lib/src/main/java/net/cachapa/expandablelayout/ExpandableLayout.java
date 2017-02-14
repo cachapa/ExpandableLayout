@@ -156,6 +156,30 @@ public class ExpandableLayout extends FrameLayout {
         setExpanded(false, animate);
     }
 
+    /**
+     * Convenience method - same as calling setExpanded(expanded, true)
+     */
+    public void setExpanded(boolean expand) {
+        setExpanded(expand, true);
+    }
+
+    public void setExpanded(boolean expand, boolean animate) {
+        if (expand && (state == EXPANDING || expansion == 1)) {
+            return;
+        }
+
+        if (!expand && (state == COLLAPSING || expansion == 0)) {
+            return;
+        }
+
+        int targetExpansion = expand ? 1 : 0;
+        if (animate) {
+            animateSize(targetExpansion);
+        } else {
+            setExpansion(targetExpansion);
+        }
+    }
+
     public int getDuration() {
         return duration;
     }
@@ -225,23 +249,6 @@ public class ExpandableLayout extends FrameLayout {
 
     public void setOnExpansionUpdateListener(OnExpansionUpdateListener listener) {
         this.listener = listener;
-    }
-
-    private void setExpanded(boolean expand, boolean animate) {
-        if (expand && (state == EXPANDING || expansion == 1)) {
-            return;
-        }
-
-        if (!expand && (state == COLLAPSING || expansion == 0)) {
-            return;
-        }
-
-        int targetExpansion = expand ? 1 : 0;
-        if (animate) {
-            animateSize(targetExpansion);
-        } else {
-            setExpansion(targetExpansion);
-        }
     }
 
     private void animateSize(final int targetExpansion) {
