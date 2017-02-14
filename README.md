@@ -10,20 +10,6 @@ This library offloads as much work as possible to the parent layout to ensure th
 
 [![Google Play Store badge](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=net.cachapa.expandablelayoutdemo)
 
-
-### Note to current users
-
-I've decided to redesign how the expansion animation works. Instead of gradualy increasing the size of the child views, they now remain the same size and are instead "pushed" in or out of view. The new method:
-
-* Is more efficient since the child view doesn't run a layout pass in each frame
-* Looks better since the items inside the the child view don't adjust during the animation
-* Contains a lot less code, and therefore less chances to break
-* Has a simpler API
-
-The new implementation is contained in the `ExpandableLayout` class. Since the API is slightly different, I've kept the old implementation in the `ExpandableLinearLayout` class. If you're already using older versions of this library, you don't have to change anything.
-
-In any case I recommend you look at the new class. A demo of the new API is shown in the `demo` module included with this project. The old API is demonstrated in the `legacy_demo` module.
-
 ### Features
 
 ExpandableLayout supports animating:
