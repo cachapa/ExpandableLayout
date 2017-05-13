@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
             "Simple",
             "Accordion",
             "Recycler",
-            "Horizontal"
+            "Horizontal",
+            "Manual"
     };
 
     @Override
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     return new RecyclerViewFragment();
                 case 3:
                     return new HorizontalFragment();
+                case 4:
+                    return new ManualFragment();
             }
 
             throw new IllegalStateException("There's no fragment for position " + position);
