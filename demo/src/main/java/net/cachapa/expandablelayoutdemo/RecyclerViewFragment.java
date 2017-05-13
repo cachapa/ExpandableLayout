@@ -22,13 +22,13 @@ public class RecyclerViewFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new SimpleAdapter(recyclerView));
-        
+
         return rootView;
     }
-    
+
     private static class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.ViewHolder> {
         private static final int UNSELECTED = -1;
-        
+
         private RecyclerView recyclerView;
         private int selectedItem = UNSELECTED;
 
@@ -53,8 +53,7 @@ public class RecyclerViewFragment extends Fragment {
             return 100;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ExpandableLayout.OnExpansionUpdateListener {
             private ExpandableLayout expandableLayout;
             private TextView expandButton;
             private int position;
@@ -64,6 +63,7 @@ public class RecyclerViewFragment extends Fragment {
 
                 expandableLayout = (ExpandableLayout) itemView.findViewById(R.id.expandable_layout);
                 expandableLayout.setInterpolator(new OvershootInterpolator());
+                expandableLayout.setOnExpansionUpdateListener(this);
                 expandButton = (TextView) itemView.findViewById(R.id.expand_button);
 
                 expandButton.setOnClickListener(this);
@@ -71,9 +71,9 @@ public class RecyclerViewFragment extends Fragment {
 
             public void bind(int position) {
                 this.position = position;
-                
+
                 expandButton.setText(position + ". Tap to expand");
-                
+
                 expandButton.setSelected(false);
                 expandableLayout.collapse(false);
             }
@@ -85,7 +85,7 @@ public class RecyclerViewFragment extends Fragment {
                     holder.expandButton.setSelected(false);
                     holder.expandableLayout.collapse();
                 }
-                
+
                 if (position == selectedItem) {
                     selectedItem = UNSELECTED;
                 } else {
@@ -93,6 +93,11 @@ public class RecyclerViewFragment extends Fragment {
                     expandableLayout.expand();
                     selectedItem = position;
                 }
+            }
+
+            @Override
+            public void onExpansionUpdate(float expansionFraction) {
+                recyclerView.smoothScrollToPosition(getAdapterPosition());
             }
         }
     }
