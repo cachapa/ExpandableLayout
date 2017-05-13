@@ -8,8 +8,8 @@ android {
         applicationId "net.cachapa.expandablelayoutdemo"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 4
-        versionName "2.9"
+        versionCode 5
+        versionName "2.9.1"
     }
 }
 
