@@ -81,9 +81,10 @@ public class ExpandableLayout extends FrameLayout {
     }
 
     @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        Bundle bundle = (Bundle) state;
+    protected void onRestoreInstanceState(Parcelable parcelable) {
+        Bundle bundle = (Bundle) parcelable;
         expansion = bundle.getFloat(KEY_EXPANSION);
+        state = expansion == 1 ? EXPANDED : COLLAPSED;
         Parcelable superState = bundle.getParcelable(KEY_SUPER_STATE);
 
         super.onRestoreInstanceState(superState);
