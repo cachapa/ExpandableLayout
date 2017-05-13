@@ -3,6 +3,7 @@ package net.cachapa.expandablelayoutdemo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,20 @@ public class AccordionFragment extends Fragment implements View.OnClickListener 
 
         expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
         expandableLayout1 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_1);
+        
+        expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                Log.d("ExpandableLayout0", "State: " + state);
+            }
+        });
+
+        expandableLayout1.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+            @Override
+            public void onExpansionUpdate(float expansionFraction, int state) {
+                Log.d("ExpandableLayout1", "State: " + state);
+            }
+        });
 
         rootView.findViewById(R.id.expand_button_0).setOnClickListener(this);
         rootView.findViewById(R.id.expand_button_1).setOnClickListener(this);

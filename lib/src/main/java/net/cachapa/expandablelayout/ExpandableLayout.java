@@ -15,10 +15,18 @@ import android.widget.LinearLayout;
 
 import net.cachapa.expandablelayout.util.FastOutSlowInInterpolator;
 
+import static net.cachapa.expandablelayout.ExpandableLayout.State.COLLAPSED;
+import static net.cachapa.expandablelayout.ExpandableLayout.State.COLLAPSING;
+import static net.cachapa.expandablelayout.ExpandableLayout.State.EXPANDED;
+import static net.cachapa.expandablelayout.ExpandableLayout.State.EXPANDING;
+
 public class ExpandableLayout extends FrameLayout {
-    private static final int IDLE = 0;
-    private static final int EXPANDING = 1;
-    private static final int COLLAPSING = 2;
+    public interface State {
+        int COLLAPSED = 0;
+        int COLLAPSING = 1;
+        int EXPANDING = 2;
+        int EXPANDED = 3;
+    }
 
     public static final String KEY_SUPER_STATE = "super_state";
     public static final String KEY_EXPANSION = "expansion";
@@ -32,7 +40,7 @@ public class ExpandableLayout extends FrameLayout {
     private float parallax;
     private float expansion;
     private int orientation;
-    private int state = IDLE;
+    private int state;
 
     private Interpolator interpolator = new FastOutSlowInInterpolator();
     private ValueAnimator animator;
@@ -54,6 +62,7 @@ public class ExpandableLayout extends FrameLayout {
             parallax = a.getFloat(R.styleable.ExpandableLayout_el_parallax, 1);
             a.recycle();
 
+            state = expansion == 0 ? COLLAPSED : EXPANDED;
             setParallax(parallax);
         }
     }
@@ -123,8 +132,17 @@ public class ExpandableLayout extends FrameLayout {
         super.onConfigurationChanged(newConfig);
     }
 
+    /**
+     * Get expansion state
+     *
+     * @return one of {@link State}
+     */
+    public int getState() {
+        return state;
+    }
+
     public boolean isExpanded() {
-        return state == EXPANDING || (Math.abs(expansion - 1) < 0.0001f);
+        return state == EXPANDING || state == EXPANDED;
     }
 
     public void toggle() {
@@ -163,11 +181,11 @@ public class ExpandableLayout extends FrameLayout {
     }
 
     public void setExpanded(boolean expand, boolean animate) {
-        if (expand && (state == EXPANDING || expansion == 1)) {
+        if (expand && isExpanded()) {
             return;
         }
 
-        if (!expand && (state == COLLAPSING || expansion == 0)) {
+        if (!expand && !isExpanded()) {
             return;
         }
 
@@ -175,7 +193,7 @@ public class ExpandableLayout extends FrameLayout {
         if (animate) {
             animateSize(targetExpansion);
         } else {
-            setExpansion(targetExpansion);
+            setExpansionInternal(targetExpansion);
         }
     }
 
@@ -200,13 +218,28 @@ public class ExpandableLayout extends FrameLayout {
             return;
         }
 
-        setVisibility(expansion == 0 ? GONE : VISIBLE);
+        // Infer state from previous value
+        float delta = expansion - this.expansion;
+        if (expansion == 0) {
+            state = COLLAPSED;
+        } else if (expansion == 1) {
+            state = EXPANDED;
+        } else if (delta < 0) {
+            state = COLLAPSING;
+        } else if (delta > 0) {
+            state = EXPANDING;
+        }
+        setExpansionInternal(expansion);
+    }
+
+    private void setExpansionInternal(float expansion) {
+        setVisibility(state == COLLAPSED ? GONE : VISIBLE);
 
         this.expansion = expansion;
         requestLayout();
 
         if (listener != null) {
-            listener.onExpansionUpdate(expansion);
+            listener.onExpansionUpdate(expansion, state);
         }
     }
 
@@ -235,7 +268,7 @@ public class ExpandableLayout extends FrameLayout {
         this.listener = listener;
     }
 
-    private void animateSize(final int targetExpansion) {
+    private void animateSize(int targetExpansion) {
         if (animator != null) {
             animator.cancel();
             animator = null;
@@ -248,35 +281,53 @@ public class ExpandableLayout extends FrameLayout {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                setExpansion((float) valueAnimator.getAnimatedValue());
+                setExpansionInternal((float) valueAnimator.getAnimatedValue());
             }
         });
 
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                state = targetExpansion == 0 ? COLLAPSING : EXPANDING;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                state = IDLE;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                state = IDLE;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
+        animator.addListener(new ExpansionListener(targetExpansion));
 
         animator.start();
     }
 
     public interface OnExpansionUpdateListener {
-        void onExpansionUpdate(float expansionFraction);
+        /**
+         * Callback for expansion updates
+         *
+         * @param expansionFraction Value between 0 (collapsed) and 1 (expanded) representing the the expansion progress
+         * @param state             One of {@link State} repesenting the current expansion state
+         */
+        void onExpansionUpdate(float expansionFraction, int state);
+    }
+
+    private class ExpansionListener implements Animator.AnimatorListener {
+        private int targetExpansion;
+        private boolean canceled;
+
+        public ExpansionListener(int targetExpansion) {
+            this.targetExpansion = targetExpansion;
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            state = targetExpansion == 0 ? COLLAPSING : EXPANDING;
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            if (!canceled) {
+                state = targetExpansion == 0 ? COLLAPSED : EXPANDED;
+                setExpansionInternal(targetExpansion);
+            }
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            canceled = true;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+        }
     }
 }

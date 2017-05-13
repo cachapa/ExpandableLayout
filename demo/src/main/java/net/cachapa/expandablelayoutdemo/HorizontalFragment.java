@@ -3,6 +3,7 @@ package net.cachapa.expandablelayoutdemo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,8 @@ public class HorizontalFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onExpansionUpdate(float expansionFraction) {
+    public void onExpansionUpdate(float expansionFraction, int state) {
+        Log.d("ExpandableLayout", "State: " + state);
         expandButton.setRotation(expansionFraction * 180);
     }
 
