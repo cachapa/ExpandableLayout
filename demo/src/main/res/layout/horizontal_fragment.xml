@@ -39,8 +39,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="Expanded Content"
-                android:textColor="#fff"
-                app:layout_expandable="true" />
+                android:textColor="#fff" />
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 
