@@ -38,8 +38,7 @@
                 android:elevation="4dp"
                 android:gravity="center"
                 android:text="Fixed height"
-                android:textColor="#fff"
-                app:layout_expandable="true" />
+                android:textColor="#fff" />
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 
@@ -78,8 +77,7 @@
                 android:elevation="4dp"
                 android:gravity="center"
                 android:text="Fixed height"
-                android:textColor="#fff"
-                app:layout_expandable="true" />
+                android:textColor="#fff"/>
 
         </net.cachapa.expandablelayout.ExpandableLayout>
 
