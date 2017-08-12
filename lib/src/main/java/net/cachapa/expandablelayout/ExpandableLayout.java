@@ -234,6 +234,9 @@ public class ExpandableLayout extends FrameLayout {
     }
 
     private void setExpansionInternal(float expansion) {
+        // update the state
+        state = expansion == 0 ? COLLAPSED : EXPANDED;
+
         setVisibility(state == COLLAPSED ? GONE : VISIBLE);
 
         this.expansion = expansion;
@@ -317,7 +320,6 @@ public class ExpandableLayout extends FrameLayout {
         @Override
         public void onAnimationEnd(Animator animation) {
             if (!canceled) {
-                state = targetExpansion == 0 ? COLLAPSED : EXPANDED;
                 setExpansionInternal(targetExpansion);
             }
         }
