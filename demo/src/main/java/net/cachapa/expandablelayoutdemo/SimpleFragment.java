@@ -20,8 +20,8 @@ public class SimpleFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.simple_fragment, container, false);
 
-        expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
-        expandableLayout1 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_1);
+        expandableLayout0 = rootView.findViewById(R.id.expandable_layout_0);
+        expandableLayout1 = rootView.findViewById(R.id.expandable_layout_1);
 
         expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
