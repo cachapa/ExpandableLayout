@@ -182,11 +182,7 @@ public class ExpandableLayout extends FrameLayout {
     }
 
     public void setExpanded(boolean expand, boolean animate) {
-        if (expand && isExpanded()) {
-            return;
-        }
-
-        if (!expand && !isExpanded()) {
+        if (expand == isExpanded()) {
             return;
         }
 
@@ -194,7 +190,7 @@ public class ExpandableLayout extends FrameLayout {
         if (animate) {
             animateSize(targetExpansion);
         } else {
-            setExpansionInternal(targetExpansion);
+            setExpansion(targetExpansion);
         }
     }
 
@@ -230,12 +226,8 @@ public class ExpandableLayout extends FrameLayout {
         } else if (delta > 0) {
             state = EXPANDING;
         }
-        setExpansionInternal(expansion);
-    }
 
-    private void setExpansionInternal(float expansion) {
         setVisibility(state == COLLAPSED ? GONE : VISIBLE);
-
         this.expansion = expansion;
         requestLayout();
 
@@ -282,7 +274,7 @@ public class ExpandableLayout extends FrameLayout {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                setExpansionInternal((float) valueAnimator.getAnimatedValue());
+                setExpansion((float) valueAnimator.getAnimatedValue());
             }
         });
 
@@ -318,7 +310,7 @@ public class ExpandableLayout extends FrameLayout {
         public void onAnimationEnd(Animator animation) {
             if (!canceled) {
                 state = targetExpansion == 0 ? COLLAPSED : EXPANDED;
-                setExpansionInternal(targetExpansion);
+                setExpansion(targetExpansion);
             }
         }
 
