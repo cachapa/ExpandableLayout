@@ -86,4 +86,4 @@ A full demo of the library is included with the project.
 
 ### Footnotes
 
-Gifs were generated using the following script: https://gist.github.com/cachapa/aa829bfc717fc4f1d52c568d7ae8521e
+Gifs were generated using the [following](https://gist.github.com/cachapa/aa829bfc717fc4f1d52c568d7ae8521e) script.
