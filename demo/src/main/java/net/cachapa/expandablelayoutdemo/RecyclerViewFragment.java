@@ -99,7 +99,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {
                 Log.d("ExpandableLayout", "State: " + state);
-                if (state!=ExpandableLayout.State.COLLAPSED) {
+                if (state != ExpandableLayout.State.COLLAPSED) {
                     recyclerView.smoothScrollToPosition(getAdapterPosition());
                 }
             }
