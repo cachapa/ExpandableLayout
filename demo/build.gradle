@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         applicationId "net.cachapa.expandablelayoutdemo"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 5
         versionName "2.9.1"
     }
@@ -16,6 +16,6 @@ android {
 dependencies {
     compile project(path: ':lib')
 
-    compile 'com.android.support:design:26.0.1'
-    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:appcompat-v7:27.0.2'
 }
