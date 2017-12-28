@@ -46,7 +46,7 @@ public class RecyclerViewFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.bind(position);
+            holder.bind();
         }
 
         @Override
@@ -57,7 +57,6 @@ public class RecyclerViewFragment extends Fragment {
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ExpandableLayout.OnExpansionUpdateListener {
             private ExpandableLayout expandableLayout;
             private TextView expandButton;
-            private int position;
 
             public ViewHolder(View itemView) {
                 super(itemView);
@@ -70,13 +69,13 @@ public class RecyclerViewFragment extends Fragment {
                 expandButton.setOnClickListener(this);
             }
 
-            public void bind(int position) {
-                this.position = position;
+            public void bind() {
+                int position = getAdapterPosition();
+                boolean isSelected = position == selectedItem;
 
                 expandButton.setText(position + ". Tap to expand");
-
-                expandButton.setSelected(false);
-                expandableLayout.collapse(false);
+                expandButton.setSelected(isSelected);
+                expandableLayout.setExpanded(isSelected, false);
             }
 
             @Override
@@ -87,6 +86,7 @@ public class RecyclerViewFragment extends Fragment {
                     holder.expandableLayout.collapse();
                 }
 
+                int position = getAdapterPosition();
                 if (position == selectedItem) {
                     selectedItem = UNSELECTED;
                 } else {
@@ -99,7 +99,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {
                 Log.d("ExpandableLayout", "State: " + state);
-                if (state != ExpandableLayout.State.COLLAPSED) {
+                if (state == ExpandableLayout.State.EXPANDING) {
                     recyclerView.smoothScrollToPosition(getAdapterPosition());
                 }
             }
