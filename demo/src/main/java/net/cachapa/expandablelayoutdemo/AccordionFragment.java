@@ -1,6 +1,7 @@
 package net.cachapa.expandablelayoutdemo;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,12 +18,12 @@ public class AccordionFragment extends Fragment implements View.OnClickListener 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.accordion_fragment, container, false);
 
-        expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
-        expandableLayout1 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_1);
-        
+        expandableLayout0 = rootView.findViewById(R.id.expandable_layout_0);
+        expandableLayout1 = rootView.findViewById(R.id.expandable_layout_1);
+
         expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {

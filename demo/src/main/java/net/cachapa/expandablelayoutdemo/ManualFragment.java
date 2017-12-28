@@ -21,10 +21,10 @@ public class ManualFragment extends Fragment implements ExpandableLayout.OnExpan
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.manual_fragment, container, false);
 
-        seekbar = (SeekBar) rootView.findViewById(R.id.seek_bar);
+        seekbar = rootView.findViewById(R.id.seek_bar);
         seekbar.setOnSeekBarChangeListener(this);
 
-        expandableLayout = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout);
+        expandableLayout = rootView.findViewById(R.id.expandable_layout);
         expandableLayout.setOnExpansionUpdateListener(this);
 
         content = rootView.findViewById(R.id.content);
