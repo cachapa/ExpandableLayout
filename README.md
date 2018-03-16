@@ -37,7 +37,7 @@ Reference the library from your module's build.gradle:
 ``` gradle
 dependencies {
     [...]
-    compile 'net.cachapa.expandablelayout:expandablelayout:[latest_version]'
+    implementation 'net.cachapa.expandablelayout:expandablelayout:[latest_version]'
 }
 ```
 
