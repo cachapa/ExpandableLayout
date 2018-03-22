@@ -99,8 +99,6 @@ public class ExpandableLayout extends FrameLayout {
 
         int size = orientation == LinearLayout.HORIZONTAL ? width : height;
 
-        setVisibility(expansion == 0 && size == 0 ? GONE : VISIBLE);
-
         int expansionDelta = size - Math.round(size * expansion);
         if (parallax > 0) {
             float parallaxDelta = expansionDelta * parallax;
@@ -227,7 +225,6 @@ public class ExpandableLayout extends FrameLayout {
             state = EXPANDING;
         }
 
-        setVisibility(state == COLLAPSED ? GONE : VISIBLE);
         this.expansion = expansion;
         requestLayout();
 
