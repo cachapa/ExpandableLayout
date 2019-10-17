@@ -242,8 +242,7 @@ public class ExpandableLayout extends FrameLayout {
 
     public void setParallax(float parallax) {
         // Make sure parallax is between 0 and 1
-        parallax = Math.min(1, Math.max(0, parallax));
-        this.parallax = parallax;
+        this.parallax = Math.min(1, Math.max(0, parallax));
     }
 
     public int getOrientation() {
